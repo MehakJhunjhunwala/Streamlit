@@ -1,22 +1,22 @@
 import streamlit as st
+import pandas as pd
 
-# Page title and icon
-st.set_page_config(page_title="About Mehak", page_icon="😊")
+st.title("CSV File Uploader and Viewer")
 
-# Title
-st.title("👩‍💻 About Mehak Jhunjhunwala")
+# File uploader
+uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
 
-# Introduction
-st.subheader("Hello! I'm Mehak 👋")
-st.write("""
-I'm currently in my **3rd year of BCA, Section A**. I love working with **Python, Power BI, Streamlit, and Android development**. I'm passionate about building creative tech solutions that make a difference.
+# Check if a file is uploaded
+if uploaded_file is not None:
+    try:
+        # Read the CSV file
+        df = pd.read_csv(uploaded_file)
 
-Some of my recent projects include:
-- ✈️ **Flight Delay Prediction App** using Streamlit & Machine Learning
-- 📊 **Interactive Dashboards** using Power BI & D3.js
-- 🤖 **HR Placement AI System (HRIo)**
+        # Display the dataframe
+        st.subheader("CSV File Contents:")
+        st.dataframe(df)
 
-I'm also exploring AWS Cloud, NLP, and data visualization tools!
-
----
-""")
+    except Exception as e:
+        st.error(f"Error reading file: {e}")
+else:
+    st.info("Please upload a CSV file to view its content.")
